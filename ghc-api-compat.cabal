@@ -4,6 +4,8 @@ synopsis:            GHC-API compatibility helpers
 description:
    GHC codebase is a moving target. This package provides
    compatibility for codes relying on an older GHC-API version.
+   
+   See https://gitlab.haskell.org/ghc/ghc/-/wikis/Make-GHC-codebase-more-modular for the migration plan.
 license:             BSD3
 license-file:        LICENSE
 author:              Sylvain Henry
@@ -12,7 +14,9 @@ copyright:           Sylvain Henry 2020
 category:            Development
 build-type:          Simple
 cabal-version:       1.22
-
+source-repository head
+  type:     git
+  location: https://github.com/hsyl20/ghc-api-compat.git
 library
    build-depends:
       ghc >= 8.6
