@@ -4,7 +4,7 @@ synopsis:            GHC-API compatibility helpers
 description:
    GHC codebase is a moving target. This package provides
    compatibility for codes relying on an older GHC-API version.
-   
+
    See https://gitlab.haskell.org/ghc/ghc/-/wikis/Make-GHC-codebase-more-modular for the migration plan.
 license:             BSD3
 license-file:        LICENSE
@@ -26,6 +26,10 @@ library
       reexported-modules:
          GHC.Hs.PlaceHolder             as PlaceHolder
 
+   if impl(ghc >= 8.10) && impl(ghc < 8.11)
+      reexported-modules:
+           GHC.Hs.Types                   as HsTypes
+
    if impl(ghc >= 8.10)
       reexported-modules:
            GHC.Hs.Binds                   as HsBinds
@@ -33,13 +37,14 @@ library
          , GHC.Hs.Doc                     as HsDoc
          , GHC.Hs.Dump                    as HsDumpAst
          , GHC.Hs.Expr                    as HsExpr
+         , GHC.Hs.Expr
          , GHC.Hs.Extension               as HsExtension
+         , GHC.Hs.Extension
          , GHC.Hs                         as HsSyn
          , GHC.Hs.ImpExp                  as HsImpExp
          , GHC.Hs.Instances               as HsInstances
          , GHC.Hs.Lit                     as HsLit
          , GHC.Hs.Pat                     as HsPat
-         , GHC.Hs.Types                   as HsTypes
          , GHC.Hs.Utils                   as HsUtils
 
          , GHC.Platform.ARM64             as CodeGen.Platform.ARM64
@@ -80,16 +85,16 @@ library
 
    if impl(ghc >= 8.11)
       reexported-modules:
-           GHC.Rename.Binds               as RnBinds
+           GHC.Rename.Bind                as RnBinds
          , GHC.Rename.Env                 as RnEnv
          , GHC.Rename.Expr                as RnExpr
          , GHC.Rename.Fixity              as RnFixity
          , GHC.Rename.Doc                 as RnHsDoc
          , GHC.Rename.Names               as RnNames
          , GHC.Rename.Pat                 as RnPat
-         , GHC.Rename.Source              as RnSource
+         , GHC.Rename.Module              as RnSource
          , GHC.Rename.Splice              as RnSplice
-         , GHC.Rename.Types               as RnTypes
+         , GHC.Rename.HsType              as RnTypes
          , GHC.Rename.Unbound             as RnUnbound
          , GHC.Rename.Utils               as RnUtils
 
@@ -133,6 +138,35 @@ library
 
          , GHC.CmmToC                     as PprC
 
+         , GHC.Data.Bag                   as Bag
+         , GHC.Data.Bitmap                as BitMap
+         , GHC.Data.BooleanFormula        as BooleanFormula
+         , GHC.Data.EnumSet               as EnumSet
+         , GHC.Data.FastMutInt            as FastMutInt
+         , GHC.Data.FastString            as FastString
+         , GHC.Data.FastString.Env        as FastStringEnv
+         , GHC.Data.FiniteMap             as FiniteMap
+         , GHC.Data.Graph.Base            as GraphBase
+         , GHC.Data.Graph.Color           as GraphColor
+         , GHC.Data.Graph.Directed        as DiGraph
+         , GHC.Data.Graph.Ops             as GraphOps
+         , GHC.Data.Graph.Ppr             as GraphPpr
+         , GHC.Data.Graph.UnVar           as UnVarGraph
+         , GHC.Data.IOEnv                 as IOEnv
+         , GHC.Data.List.SetOps           as ListSetOpts
+         , GHC.Data.Maybe                 as Maybes
+         , GHC.Data.OrdList               as OrdList
+         , GHC.Data.Pair                  as Pair
+         , GHC.Data.Stream                as Stream
+         , GHC.Data.StringBuffer          as StringBuffer
+         , GHC.Data.TrieMap               as TrieMap
+
+         , GHC.Unit.State
+         , GHC.Unit.Info
+         , GHC.Unit.Types                 as Module
+
+         , GHC.Hs.Type                    as HsTypes
+
          , GHC.HsToCore                   as Desugar
          , GHC.HsToCore.Coverage          as Coverage
          , GHC.HsToCore.Arrows            as DsArrows
@@ -172,7 +206,7 @@ library
          , GHC.Iface.Syntax               as IfaceSyn
          , GHC.Iface.Type                 as IfaceType
          , GHC.Iface.Load                 as LoadIface
-         , GHC.Iface.Utils                as MkIface
+         , GHC.Iface.Make                 as MkIface
          , GHC.Iface.Rename               as RnModIface
          , GHC.Iface.Tidy                 as TidyPgm
 
@@ -227,7 +261,6 @@ library
          , GHC.Driver.Make                as GhcMake
          , GHC.Driver.Hooks               as Hooks
          , GHC.Driver.Session             as DynFlags
-         , GHC.Driver.Packages            as Packages
          , GHC.Driver.Phases              as DriverPhases
          , GHC.Driver.Pipeline            as DriverPipeline
          , GHC.Driver.Pipeline.Monad      as PipelineMonad
@@ -303,7 +336,8 @@ library
          , GHC.CmmToAsm.X86.RegInfo              as X86.RegInfo
          , GHC.CmmToAsm.X86.Regs                 as X86.Regs
 
-         , GHC.Core.Arity                        as CoreArity
+         , GHC.Core.Opt.Arity                    as CoreArity
+         , GHC.Core.Opt.Monad                    as CoreMonad
          , GHC.Core.FVs                          as CoreFVs
          , GHC.Core.Map                          as CoreMap
          , GHC.Core.SimpleOpt                    as CoreOpt
@@ -318,3 +352,12 @@ library
          , GHC.Core.Ppr.TyThing                  as PprTyThing
          , GHC.Core.Rules                        as Rules
          , GHC.Core.Lint                         as CoreLint
+
+         , GHC.Utils.Outputable                  as Outputable
+         , GHC.Utils.Ppr                         as Pretty
+         , GHC.Utils.Misc                        as Util
+         , GHC.Utils.Error                       as ErrUtils
+         , GHC.Core.Type
+
+         , GHC.Tc.Types                          as TcRnTypes
+         , GHC.Driver.Backend
