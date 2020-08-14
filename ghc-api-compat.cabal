@@ -95,7 +95,48 @@ library
          , GHC.Rename.Unbound             as RnUnbound
          , GHC.Rename.Utils               as RnUtils
 
+         , GHC.Builtin.Names
+         , GHC.Builtin.Names.TH
+         , GHC.Builtin.PrimOps            as PrimOp
+         , GHC.Builtin.RebindableNames
+         , GHC.Builtin.Types              as TysWiredIn
+         , GHC.Builtin.Types.Literals     as TcTypeNats
+         , GHC.Builtin.Types.Prim         as TysPrims
+         , GHC.Builtin.Uniques            as KnownUniques
+         , GHC.Builtin.Utils              as PrelInfo
+
+         , GHC.Types.Annotations          as Annotations
+         , GHC.Types.Avail                as Avail
+         , GHC.Types.Basic                as Basic
+         , GHC.Types.Basic                as BasicTypes
+         , GHC.Types.CostCentre           as CostCentre
+         , GHC.Types.CostCentre.State     as CostCentreState
+         , GHC.Types.Cpr                  as Cpr
+         , GHC.Types.Demand               as Demand
+         , GHC.Types.FieldLabel           as FieldLabel
+         , GHC.Types.ForeignCall          as ForeignCall
+         , GHC.Types.Id                   as Id
+         , GHC.Types.Id.Info              as Info
+         , GHC.Types.Id.Make              as Make
+         , GHC.Types.Literal              as Literal
+         , GHC.Types.Name                 as Name
+         , GHC.Types.Name.Cache           as NameCache
+         , GHC.Types.Name.Env             as NameEnv
+         , GHC.Types.Name.Occurrence      as OccName
+         , GHC.Types.Name.Reader          as RdrName
+         , GHC.Types.Name.Set             as NameSet
+         , GHC.Types.Name.Shape           as NameShape
          , GHC.Types.RepType              as RepType
+         , GHC.Types.SrcLoc               as SrcLoc
+         , GHC.Types.Unique               as Unique
+         , GHC.Types.Unique.DFM           as UniqDFM
+         , GHC.Types.Unique.DSet          as UniqDSet
+         , GHC.Types.Unique.FM            as UniqFM
+         , GHC.Types.Unique.Set           as UniqSet
+         , GHC.Types.Unique.Supply        as UniqSupply
+         , GHC.Types.Var                  as Var
+         , GHC.Types.Var.Env              as VarEnv
+         , GHC.Types.Var.Set              as VarSet
 
          , GHC.Cmm.BlockId                as BlockId
          , GHC.Cmm.CLabel                 as CLabel
@@ -158,9 +199,9 @@ library
          , GHC.Data.StringBuffer          as StringBuffer
          , GHC.Data.TrieMap               as TrieMap
 
-         , GHC.Unit.State
-         , GHC.Unit.Info
-         , GHC.Unit.Types                 as Module
+         , GHC.Unit.State                 as Packages
+         , GHC.Unit.Info                  as PackageConfig
+         , GHC.Unit.Module                as Module
 
          , GHC.Hs.Type                    as HsTypes
 
@@ -191,9 +232,27 @@ library
          , GHC.Stg.Subst                  as StgSubst
          , GHC.Stg.Syntax                 as StgSyn
 
+         -- Expose as two modules as they apparently got merged
+         , GHC.Settings                   as Settings
+         , GHC.Settings                   as ToolSettings
+         , GHC.Settings.Config            as Config
+         , GHC.Settings.Constants         as Constants
+         , GHC.Settings.IO                as SysTools.Settings
+
          , GHC.Stg.Lift                   as StgLiftLams
          , GHC.Stg.Lift.Analysis          as StgLiftLams.Analysis
          , GHC.Stg.Lift.Monad             as StgLiftLams.LiftM
+
+         , GHC.SysTools                   as SysTools
+         , GHC.SysTools.Ar                as Ar
+         , GHC.SysTools.BaseDir           as SysTools.BaseDir
+         , GHC.SysTools.Elf               as Elf
+         , GHC.SysTools.ExtraObj          as SysTools.ExtraObj
+         , GHC.SysTools.FileCleanup       as FileCleanup
+         , GHC.SysTools.Info              as SysTools.Info
+         , GHC.SysTools.Process           as SysTools.Process
+         , GHC.SysTools.Tasks             as SysTools.Tasks
+         , GHC.SysTools.Terminal          as SysTools.Terminal
 
          , GHC.CoreToStg                  as CoreToStg
          , GHC.CoreToStg.Prep             as CorePrep
@@ -204,6 +263,7 @@ library
          , GHC.Iface.Type                 as IfaceType
          , GHC.Iface.Load                 as LoadIface
          , GHC.Iface.Make                 as MkIface
+         , GHC.Iface.Recomp
          , GHC.Iface.Rename               as RnModIface
          , GHC.Iface.Tidy                 as TidyPgm
 
@@ -264,6 +324,7 @@ library
          , GHC.Driver.Plugins             as Plugins
          , GHC.Driver.Monad               as GhcMonad
          , GHC.Driver.Types               as HscTypes
+         , GHC.Prelude                    as GhcPrelude
          , GHC.Plugins                    as GhcPlugins
          , GHC                            as GHC
          , GHC.CmmToAsm                          as AsmCodeGen
@@ -333,28 +394,77 @@ library
          , GHC.CmmToAsm.X86.RegInfo              as X86.RegInfo
          , GHC.CmmToAsm.X86.Regs                 as X86.Regs
 
+         , GHC.Core                              as CoreSyn
+         , GHC.Core.Class                        as Class
+         , GHC.Core.Coercion                     as Coercion
+         , GHC.Core.Coercion.Axiom               as CoAxion
+         , GHC.Core.Coercion.Opt                 as OptCoercion
+         , GHC.Core.ConLike                      as ConLike
+         , GHC.Core.DataCon                      as DataCon
+         , GHC.Core.FVs                          as CoreFVs
+         , GHC.Core.FamInstEnv                   as FamInstEnv
+         , GHC.Core.InstEnv                      as InstEnv
+         , GHC.Core.Lint                         as CoreLint
+         , GHC.Core.Make                         as MkCore
+         , GHC.Core.Map                          as CoreMap
+         , GHC.Core.Multiplicity
+
          , GHC.Core.Opt.Arity                    as CoreArity
          , GHC.Core.Opt.Monad                    as CoreMonad
-         , GHC.Core.FVs                          as CoreFVs
-         , GHC.Core.Map                          as CoreMap
-         , GHC.Core.SimpleOpt                    as CoreOpt
-         , GHC.Core.Seq                          as CoreSeq
-         , GHC.Core.Stats                        as CoreStats
-         , GHC.Core.Subst                        as CoreSubst
-         , GHC.Core                              as CoreSyn
-         , GHC.Core.Unfold                       as CoreUnfold
-         , GHC.Core.Utils                        as CoreUtils
-         , GHC.Core.Make                         as MkCore
+
+         , GHC.Core.PatSyn                       as PatSyn
          , GHC.Core.Ppr                          as PprCore
          , GHC.Core.Ppr.TyThing                  as PprTyThing
+         , GHC.Core.Predicate                    as Predicate
          , GHC.Core.Rules                        as Rules
-         , GHC.Core.Lint                         as CoreLint
+         , GHC.Core.Seq                          as CoreSeq
+         , GHC.Core.SimpleOpt                    as CoreOpt
+         , GHC.Core.Stats                        as CoreStats
+         , GHC.Core.Subst                        as CoreSubst
+         , GHC.Core.Tidy                         as CoreTidy
 
-         , GHC.Utils.Outputable                  as Outputable
-         , GHC.Utils.Ppr                         as Pretty
-         , GHC.Utils.Misc                        as Util
+         , GHC.Core.TyCo.FVs                     as TyCoFVs
+         , GHC.Core.TyCo.Ppr                     as TyCoPpr
+         , GHC.Core.TyCo.Rep                     as TyCoRep
+         , GHC.Core.TyCo.Subst                   as TyCoSubst
+         , GHC.Core.TyCo.Tidy                    as TyCoTidy
+
+         , GHC.Core.TyCon                        as TyCon
+         , GHC.Core.Type                         as Type
+         , GHC.Core.Unfold                       as CoreUnfold
+         , GHC.Core.Unify                        as Unify
+         , GHC.Core.UsageEnv
+         , GHC.Core.Utils                        as CoreUtils
+
+         , GHC.Utils.Asm                         as AsmUtils
+         , GHC.Utils.Binary                      as Binary
+         , GHC.Utils.BufHandle                   as BufWrite
+         , GHC.Utils.CliOption                   as CliOption
+         , GHC.Utils.Encoding                    as Encoding
          , GHC.Utils.Error                       as ErrUtils
-         , GHC.Core.Type
+         , GHC.Utils.Exception                   as Exception
+         , GHC.Utils.FV                          as FV
+         , GHC.Utils.Fingerprint                 as Fingerprint
+         , GHC.Utils.IO.Unsafe                   as FastFunctions
+         , GHC.Utils.Json                        as Json
+         , GHC.Utils.Lexeme                      as Lexeme
+         , GHC.Utils.Misc                        as Util
+         , GHC.Utils.Monad                       as MonadUtils
+         , GHC.Utils.Monad.State                 as State
+         , GHC.Utils.Outputable                  as Outputable
+         , GHC.Utils.Panic                       as Panic
+         , GHC.Utils.Panic.Plain                 as PlainPanic
+         , GHC.Utils.Ppr                         as Pretty
+         , GHC.Utils.Ppr.Colour                  as PprColour
+
+         , GHC.Parser                            as Parser
+         , GHC.Parser.CharClass                  as CType
+         , GHC.Parser.Header                     as HeaderInfo
+         , GHC.Parser.Lexer                      as Lexer
+         , GHC.Parser.PostProcess                as RdrHsSyn
 
          , GHC.Tc.Types                          as TcRnTypes
+         , GHC.Tc.Utils.Zonk                     as TcHsSyn
+         , GHC.Tc.Utils.Env                      as TcEnv
+         , GHC.Tc.Utils.Monad                   as TcRnMonad
          , GHC.Driver.Backend
