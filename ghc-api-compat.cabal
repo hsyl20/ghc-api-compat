@@ -357,4 +357,4 @@ library
          , GHC.Core.Type
 
          , GHC.Tc.Types                          as TcRnTypes
-         , GHC.Driver.Backend
+         , GHC.Driver.Backed
