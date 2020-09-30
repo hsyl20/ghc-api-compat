@@ -34,9 +34,7 @@ library
          , GHC.Hs.Doc                     as HsDoc
          , GHC.Hs.Dump                    as HsDumpAst
          , GHC.Hs.Expr                    as HsExpr
-         , GHC.Hs.Expr
          , GHC.Hs.Extension               as HsExtension
-         , GHC.Hs.Extension
          , GHC.Hs                         as HsSyn
          , GHC.Hs.ImpExp                  as HsImpExp
          , GHC.Hs.Instances               as HsInstances
@@ -98,10 +96,10 @@ library
          , GHC.Rename.Unbound             as RnUnbound
          , GHC.Rename.Utils               as RnUtils
 
-         , GHC.Builtin.Names
-         , GHC.Builtin.Names.TH
+         -- , GHC.Builtin.Names
+         -- , GHC.Builtin.Names.TH
          , GHC.Builtin.PrimOps            as PrimOp
-         , GHC.Builtin.RebindableNames
+         -- , GHC.Builtin.RebindableNames
          , GHC.Builtin.Types              as TysWiredIn
          , GHC.Builtin.Types.Literals     as TcTypeNats
          , GHC.Builtin.Types.Prim         as TysPrims
@@ -266,7 +264,7 @@ library
          , GHC.Iface.Type                 as IfaceType
          , GHC.Iface.Load                 as LoadIface
          , GHC.Iface.Make                 as MkIface
-         , GHC.Iface.Recomp
+         -- , GHC.Iface.Recomp
          , GHC.Iface.Rename               as RnModIface
          , GHC.Iface.Tidy                 as TidyPgm
 
@@ -311,6 +309,7 @@ library
          , GHC.CmmToLlvm.Data             as LlvmCodeGen.Data
          , GHC.CmmToLlvm.Ppr              as LlvmCodeGen.Ppr
          , GHC.CmmToLlvm.Regs             as LlvmCodeGen.Regs
+         -- , GHC.Driver.Backend
          , GHC.Driver.Backpack.Syntax     as BkpSyn
          , GHC.Driver.Backpack            as DriverBkp
          , GHC.Driver.CmdLine             as CmdLineParser
@@ -410,7 +409,7 @@ library
          , GHC.Core.Lint                         as CoreLint
          , GHC.Core.Make                         as MkCore
          , GHC.Core.Map                          as CoreMap
-         , GHC.Core.Multiplicity
+         -- , GHC.Core.Multiplicity
 
          , GHC.Core.Opt.Arity                    as CoreArity
          , GHC.Core.Opt.Monad                    as CoreMonad
@@ -436,7 +435,7 @@ library
          , GHC.Core.Type                         as Type
          , GHC.Core.Unfold                       as CoreUnfold
          , GHC.Core.Unify                        as Unify
-         , GHC.Core.UsageEnv
+         -- , GHC.Core.UsageEnv
          , GHC.Core.Utils                        as CoreUtils
 
          , GHC.Utils.Asm                         as AsmUtils
@@ -470,7 +469,7 @@ library
          , GHC.Tc.Types                          as TcRnTypes
          , GHC.Tc.Utils.Zonk                     as TcHsSyn
          , GHC.Tc.Utils.Env                      as TcEnv
-         , GHC.Tc.Utils.Monad                   as TcRnMonad
+         , GHC.Tc.Utils.Monad                    as TcRnMonad
          , GHC.Driver.Backend
 
    if impl(ghc >= 9.1)
