@@ -81,6 +81,8 @@ library
 
 
    if impl(ghc >= 8.11)
+      hs-source-dirs:   src
+      exposed-modules:  Outputable
       reexported-modules:
            GHC.Rename.Bind                as RnBinds
          , GHC.Rename.Env                 as RnEnv
@@ -451,7 +453,8 @@ library
          , GHC.Utils.Misc                        as Util
          , GHC.Utils.Monad                       as MonadUtils
          , GHC.Utils.Monad.State                 as State
-         , GHC.Utils.Outputable                  as Outputable
+         -- Customly exposed
+         -- , GHC.Utils.Outputable                  as Outputable
          , GHC.Utils.Panic                       as Panic
          , GHC.Utils.Panic.Plain                 as PlainPanic
          , GHC.Utils.Ppr                         as Pretty
