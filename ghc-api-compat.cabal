@@ -19,7 +19,7 @@ source-repository head
   location: https://github.com/hsyl20/ghc-api-compat.git
 library
    build-depends:
-      ghc >= 8.6
+      ghc >= 8.6, base
    default-language:    Haskell2010
 
    if impl(ghc >= 8.10) && impl(ghc < 8.11)
@@ -74,13 +74,14 @@ library
 
          , GHC.ThToHs                     as Convert
 
-         , GHC.HsToCore.PmCheck           as Check
+   if impl(ghc >= 8.10) && impl(ghc < 9.1)
+      reexported-modules:
+           GHC.HsToCore.PmCheck           as Check
          , GHC.HsToCore.PmCheck.Oracle    as PmOracle
          , GHC.HsToCore.PmCheck.Ppr       as PmPpr
          , GHC.HsToCore.PmCheck.Types     as PmTypes
 
-
-   if impl(ghc >= 8.11)
+   if impl(ghc >= 9.0)
       hs-source-dirs:   src
       exposed-modules:  Outputable
       reexported-modules:
@@ -471,3 +472,9 @@ library
          , GHC.Tc.Utils.Env                      as TcEnv
          , GHC.Tc.Utils.Monad                   as TcRnMonad
          , GHC.Driver.Backend
+
+   if impl(ghc >= 9.1)
+      reexported-modules:
+           GHC.HsToCore.Pmc           as Check
+         , GHC.HsToCore.Pmc.Ppr       as PmPpr
+         , GHC.HsToCore.Pmc.Types     as PmTypes
