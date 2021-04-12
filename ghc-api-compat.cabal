@@ -102,8 +102,8 @@ library
          , GHC.Rename.Unbound             as RnUnbound
          , GHC.Rename.Utils               as RnUtils
 
-         , GHC.Builtin.Names
-         , GHC.Builtin.Names.TH
+         , GHC.Builtin.Names              as PrelNames
+         , GHC.Builtin.Names.TH           as THNames
          , GHC.Builtin.PrimOps            as PrimOp
          , GHC.Builtin.RebindableNames
          , GHC.Builtin.Types              as TysWiredIn
