@@ -22,15 +22,18 @@ library
       ghc >= 8.6, base < 5.0
    default-language:    Haskell2010
 
-   if impl(ghc >= 9.0)
+   if impl(ghc >= 8.10.5)
       reexported-modules:
            GHC.Platform.AArch64           as CodeGen.Platform.ARM64
+
+   if impl(ghc >= 8.10) && impl(ghc < 8.10.5)
+      reexported-modules:
+         , GHC.Platform.ARM64             as CodeGen.Platform.ARM64
 
    if impl(ghc >= 8.10) && impl(ghc < 8.11)
       reexported-modules:
            GHC.Hs.Types                   as HsTypes
          , GHC.Hs.PlaceHolder             as PlaceHolder
-         , GHC.Platform.ARM64             as CodeGen.Platform.ARM64
 
    if impl(ghc >= 8.10)
       reexported-modules:
